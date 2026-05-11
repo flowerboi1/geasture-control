@@ -4,6 +4,6 @@
 
 # Gesture Control w/OpenCV
 
-Uses premade mediapipe solutions to detect hand location, moves the mouse cursor to the tip of the index fingers w/PyAutoGUI
+Uses pre-made mediapipe solutions to detect hand location, moves the mouse cursor to the tip of the index fingers w/PyAutoGUI.
 
 
