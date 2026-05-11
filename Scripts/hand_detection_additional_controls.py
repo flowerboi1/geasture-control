@@ -1,3 +1,6 @@
+# Adds additional controls to hand_detection.py by adding
+# keyboard inputs with pinch gesture. distance is calculated with euclidian distance.
+
 import cv2
 import mediapipe as mp
 import pyautogui
@@ -30,19 +33,18 @@ while True:
     hands = output.multi_hand_landmarks 
     if hands:
         for hand in hands:
-            drawing_utils.draw_landmarks(frame, hand) # 손에 20개의 점 표시
+            drawing_utils.draw_landmarks(frame, hand)
             landmarks = hand.landmark
             for id, landmark in enumerate(landmarks):
-                x = int(landmark.x*frame_width) # 점의 카메라상의 x좌표 환산
-                y = int(landmark.y*frame_height) # 점의 카메라상의 y좌표 환산
+                x = int(landmark.x*frame_width)
+                y = int(landmark.y*frame_height)
 
-                if id == 8: # 8번째 점(검지손가락 끝점)이 감지되었다면
+                if id == 8:
                     cv2.circle(img=frame, center=(x,y), radius=10, color=(0, 255, 255)) # 화면 상에 8번째 점(검지손가락 끝점) 표시
                     index_x = screen_width/frame_width*x
                     index_y = screen_height/frame_height*y
                     indexPos = [index_x,index_y]
-                    
-                     # 마우스 커서 위치를 8번째 점으로 이동
+
 
                 if id == 12:
                     cv2.circle(img=frame, center=(x,y), radius=10, color=(0, 255, 0))
@@ -57,12 +59,10 @@ while True:
                     thumb_y = screen_height/frame_height*y
                     pyautogui.moveTo(thumb_x, thumb_y)
                     thumbPos = [thumb_x, thumb_y]
-                    #print(thumb_x, thumb_y)
+
                     thumbIndexD = distance.euclidean(thumbPos, indexPos)
-                    #print(thumbIndexD)
+
                     middleIndexD = distance.euclidean(middlePos, thumbPos)
-                    #print(middleIndexD)
-                    #thumbIndexD = distance.euclidean(thumbPos, indexPos)
                     
                     if thumbIndexD < 70:
                         a = True
